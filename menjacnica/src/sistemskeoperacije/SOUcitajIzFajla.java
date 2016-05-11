@@ -1,0 +1,26 @@
+package sistemskeoperacije;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.LinkedList;
+import java.util.List;
+
+import menjacnica.Valuta;
+
+public class SOUcitajIzFajla {
+
+	public static void izvrsi(String putanja, List<Valuta> kursnaLista){
+		try{
+			ObjectInputStream in = new ObjectInputStream(
+					new BufferedInputStream(new FileInputStream(putanja)));
+			
+			kursnaLista = (LinkedList<Valuta>)(in.readObject());
+			
+			in.close();
+		}catch(Exception e){
+			throw new RuntimeException(e);
+		}
+	}
+	
+}
