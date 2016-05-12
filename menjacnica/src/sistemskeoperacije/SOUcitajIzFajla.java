@@ -7,8 +7,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import menjacnica.Valuta;
+import java.io.Serializable;
 
-public class SOUcitajIzFajla {
+public class SOUcitajIzFajla implements Serializable  {
 
 	public static void izvrsi(String putanja, List<Valuta> kursnaLista){
 		try{

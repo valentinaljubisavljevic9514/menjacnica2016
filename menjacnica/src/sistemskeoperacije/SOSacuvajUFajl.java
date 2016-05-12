@@ -3,11 +3,12 @@ package sistemskeoperacije;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.List;
 
 import menjacnica.Valuta;
 
-public class SOSacuvajUFajl {
+public class SOSacuvajUFajl implements Serializable{
 
 	public static void izvrsi(String putanja, List<Valuta> kursnaLista){
 		try{
