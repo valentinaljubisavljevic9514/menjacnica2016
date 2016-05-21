@@ -5,7 +5,6 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 
 import menjacnica.Menjacnica;
 import menjacnica.MenjacnicaInterface;
@@ -35,6 +34,8 @@ public class GUIKontroler {
 					glavniProzor = new MenjacnicaGUI();
 					glavniProzor.setVisible(true);
 					glavniProzor.setLocationRelativeTo(null);
+					
+					
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -97,7 +98,8 @@ public class GUIKontroler {
 	}
 	
 	public static void prikaziDodajKursGUI() {
-		dodajKurs  = new DodajKursGUI(glavniProzor);
+		
+		dodajKurs  = new DodajKursGUI();
 		dodajKurs.setLocationRelativeTo(glavniProzor.getContentPane());
 		dodajKurs.setVisible(true);
 	}
@@ -106,8 +108,7 @@ public class GUIKontroler {
 		
 		if (glavniProzor.getTable().getSelectedRow() != -1) {
 			model = (MenjacnicaTableModel) glavniProzor.getTable().getModel();
-			obrisiKurs = new ObrisiKursGUI(glavniProzor,
-					model.vratiValutu(glavniProzor.getTable().getSelectedRow()));
+			obrisiKurs = new ObrisiKursGUI(model.vratiValutu(glavniProzor.getTable().getSelectedRow()));
 			obrisiKurs.setLocationRelativeTo(glavniProzor.getContentPane());
 			obrisiKurs.setVisible(true);
 		}
@@ -116,21 +117,32 @@ public class GUIKontroler {
 	public static void prikaziIzvrsiZamenuGUI() {
 		if (glavniProzor.getTable().getSelectedRow() != -1) {
 			model = (MenjacnicaTableModel)(glavniProzor.getTable().getModel());
-			izvrsiZamenu = new IzvrsiZamenuGUI(glavniProzor,
-					model.vratiValutu(glavniProzor.getTable().getSelectedRow()));
+			izvrsiZamenu = new IzvrsiZamenuGUI(model.vratiValutu(glavniProzor.getTable().getSelectedRow()));
 			izvrsiZamenu.setLocationRelativeTo(glavniProzor.getContentPane());
 			izvrsiZamenu.setVisible(true);
 		}
 	}
 	
-	public static void unesiKurs(Valuta valuta) {
+	public static void unesiKurs() {
+		
 		try {
 
+			Valuta valuta = new Valuta();
+			// Punjenje podataka o valuti
+			valuta.setNaziv(dodajKurs.getTextFieldNaziv().getText());
+			valuta.setSkraceniNaziv(dodajKurs.getTextFieldSkraceniNaziv().getText());
+			valuta.setSifra((Integer)(dodajKurs.getSpinnerSifra().getValue()));
+			valuta.setProdajni(Double.parseDouble(dodajKurs.getTextFieldProdajniKurs().getText()));
+			valuta.setKupovni(Double.parseDouble(dodajKurs.getTextFieldKupovniKurs().getText()));
+			valuta.setSrednji(Double.parseDouble(dodajKurs.getTextFieldSrednjiKurs().getText()));
+			
 			// Dodavanje valute u kursnu listu
 			menjacnica.dodajValutu(valuta);
 
 			// Osvezavanje glavnog prozora
 			prikaziSveValute();
+			
+			
 			
 			//Zatvaranje DodajValutuGUI prozora
 			dodajKurs.dispose();
